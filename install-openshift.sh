@@ -121,7 +121,7 @@ cat <<EOD > /etc/hosts
 192.168.2.50    osn2
 192.168.2.40    osn1
 192.168.2.55    osn3
-${IP}		$(hostname) console console.${DOMAIN}
+${IP}		$(hostname) console console.${DOMAIN} apps apps.${DOMAIN} apiserver-kube-service-catalog.router.default.svc.cluster.local
 EOD
 
 if [ -z $DISK ]; then 
