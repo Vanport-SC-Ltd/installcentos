@@ -160,12 +160,12 @@ if [ ! -f ~/.ssh/id_rsa ]; then
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 	ssh -o StrictHostKeyChecking=no root@$IP_MASTER1 "pwd" < /dev/null
 	ssh -o StrictHostKeyChecking=no root@$IP_NODE1 "pwd" < /dev/null
-	ssh -o StrictHostKeyChecking=no root@$IP_INFRA1 "pwd" < /dev/null
+#	ssh -o StrictHostKeyChecking=no root@$IP_INFRA1 "pwd" < /dev/null
 fi
 	
 ssh-copy-id ${IP_MASTER1}
 ssh-copy-id ${IP_NODE1}
-ssh-copy-id ${IP_INFRA1}
+#ssh-copy-id ${IP_INFRA1}
 
 export METRICS="True"
 export LOGGING="True"
