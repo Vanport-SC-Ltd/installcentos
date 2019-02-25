@@ -9,7 +9,7 @@ export DOMAIN=${DOMAIN:="$(curl -s ipinfo.io/ip).nip.io"}
 export USERNAME=${USERNAME:="$(whoami)"}
 export PASSWORD=${PASSWORD:=password}
 export VERSION=${VERSION:="3.11"}
-export SCRIPT_REPO=${SCRIPT_REPO:="https://raw.githubusercontent.com/gshipley/installcentos/master"}
+export SCRIPT_REPO=${SCRIPT_REPO:="https://raw.githubusercontent.com/Vanport-SC-Ltd/installcentos/master"}
 export IP_MASTER1=${IP_MASTER1:="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"}
 export IP_NODE1=${IP_NODE1:="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"}
 export IP_INFRA1=${IP_INFRA1:="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"}
