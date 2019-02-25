@@ -50,7 +50,7 @@ if [ "$INTERACTIVE" = "true" ]; then
 
 	read -rp "IP_INFRA1: ($IP_INFRA1): " choice;
 	if [ "$choice" != "" ] ; then
-		export IP_NODE1="$choice";
+		export IP_INFRA1="$choice";
 	fi
 
 	read -rp "API Port: ($API_PORT): " choice;
