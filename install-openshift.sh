@@ -10,7 +10,9 @@ export USERNAME=${USERNAME:="$(whoami)"}
 export PASSWORD=${PASSWORD:=password}
 export VERSION=${VERSION:="3.11"}
 export SCRIPT_REPO=${SCRIPT_REPO:="https://raw.githubusercontent.com/gshipley/installcentos/master"}
-export IP=${IP:="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"}
+export IP_MASTER1=${IP_MASTER1:="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"}
+export IP_NODE1=${IP_NODE1:="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"}
+export IP_INFRA1=${IP_INFRA1:="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"}
 export API_PORT=${API_PORT:="8443"}
 export LETSENCRYPT=${LETSENCRYPT:="false"}
 export MAIL=${MAIL:="example@email.com"}
@@ -36,9 +38,19 @@ if [ "$INTERACTIVE" = "true" ]; then
 	if [ "$choice" != "" ] ; then
 		export VERSION="$choice";
 	fi
-	read -rp "IP: ($IP): " choice;
+	read -rp "IP_MASTER1: ($IP_MASTER1): " choice;
 	if [ "$choice" != "" ] ; then
-		export IP="$choice";
+		export IP_MASTER1="$choice";
+	fi
+
+	read -rp "IP_NODE1: ($IP_NODE1): " choice;
+	if [ "$choice" != "" ] ; then
+		export IP_NODE1="$choice";
+	fi
+
+	read -rp "IP_INFRA1: ($IP_INFRA1): " choice;
+	if [ "$choice" != "" ] ; then
+		export IP_NODE1="$choice";
 	fi
 
 	read -rp "API Port: ($API_PORT): " choice;
@@ -71,7 +83,9 @@ fi
 
 echo "******"
 echo "* Your domain is $DOMAIN "
-echo "* Your IP is $IP "
+echo "* Your IP_MASTER1 is $IP_MASTER1 "
+echo "* Your IP_NODE1 is $IP_NODE1 "
+echo "* Your IP_INFRA1 is $IP_INFRA1 "
 echo "* Your username is $USERNAME "
 echo "* Your password is $PASSWORD "
 echo "* OpenShift version: $VERSION "
@@ -118,9 +132,6 @@ cd openshift-ansible && git fetch && git checkout release-${VERSION} && cd ..
 cat <<EOD > /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-192.168.2.50    osn2
-192.168.2.40    osn1
-192.168.2.55    osn3
 ${IP}		$(hostname) console console.${DOMAIN} apps apps.${DOMAIN} apiserver-kube-service-catalog.router.default.svc.cluster.local apiserver.openshift-template-service-broker.svc
 EOD
 
@@ -147,7 +158,9 @@ systemctl enable docker
 if [ ! -f ~/.ssh/id_rsa ]; then
 	ssh-keygen -q -f ~/.ssh/id_rsa -N ""
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
-	ssh -o StrictHostKeyChecking=no root@$IP "pwd" < /dev/null
+	ssh -o StrictHostKeyChecking=no root@$IP_MASTER1 "pwd" < /dev/null
+	ssh -o StrictHostKeyChecking=no root@$IP_NODE1 "pwd" < /dev/null
+	ssh -o StrictHostKeyChecking=no root@$IP_INFRA1 "pwd" < /dev/null
 fi
 
 export METRICS="True"
