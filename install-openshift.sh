@@ -11,7 +11,7 @@ export PASSWORD=${PASSWORD:=password}
 export VERSION=${VERSION:="3.11"}
 export SCRIPT_REPO=${SCRIPT_REPO:="https://raw.githubusercontent.com/Vanport-SC-Ltd/installcentos/master"}
 export IP_MASTER1=${IP_MASTER1:="192.168.1.171"}
-export IP_NODE1=${IP_NODE1:="192.168.1.140"}
+export IP_NODE1=${IP_NODE1:="192.168.1.239"}
 export IP_INFRA1=${IP_INFRA1:="192.168.1.217"}
 export API_PORT=${API_PORT:="8443"}
 export LETSENCRYPT=${LETSENCRYPT:="false"}
